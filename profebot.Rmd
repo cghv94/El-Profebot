@@ -1,0 +1,49 @@
+---
+title: "El_Profebot"
+author: "Cesar Hernández"
+output: html_notebook
+---
+
+```{r}
+library(telegram.bot)
+
+# Token
+updater <- Updater(token = "1643036410:AAG4XdDPxYV42k6fRWPaHIpkbs00ujXskVk")
+ 
+# Saludo inicial
+start <- function(bot, update) {bot$sendMessage(chat_id = update$message$chat_id, text = sprintf("Hola, soy el Profebot, me da gusto conocerte.\n\nTe estaré apoyando con tus dudas siempre que lo necesites, si quieres hablar conmigo escribe /start, /profebot, /temario, /practicas, /tareas, /evaluacion, /preguntas o /ayuda.\n\nTambién puedes enviarme mensaje privado en:\nhttps://t.me/El_Profebot_bot\n\n¡Vamos a aprender!\n\nVersión 1.0", update$message$from$first_name))}
+start_handler <- CommandHandler("start", start)
+updater <- updater + start_handler
+ 
+profebot <- function(bot, update) {bot$sendMessage(chat_id = update$message$chat_id, text = sprintf("Soy el Profebot, fui creado por el profe Cesar con la intención de ser una herramienta con la que puedas aprender más en este curso.\n\nPuedo darte información sobre el /temario, las /tareas, las /practicas y la /evaluacion y no sólo eso, además de brindarte /ayuda incluso puedo dar respuesta a algunas /preguntas.\n\nPor cierto, el profe es un explotador y pretende que los ayude durante las 24 horas del día, pero él es muy pobre y yo cobro muy caro, así que por ahora unicamente puedo responder de 8:00 a 20:00.\n\nProfebot 1 - Cesar 0\n\nTambién puedes enviarme mensaje privado en:\nhttps://t.me/El_Profebot_bot", update$message$from$first_name))}
+profebot_handler <- CommandHandler(c("profebot"), profebot)
+updater <- updater + profebot_handler
+
+temario <- function(bot, update) {bot$sendMessage(chat_id = update$message$chat_id, text = sprintf("Puedes descargar el temario de la siguiente liga\n\nhttps://cghv94.github.io/temario-estadistica.pdf\n\n\nEscribe /start para volver al inicio.",  update$message$from$first_name))}
+temario_handler <- CommandHandler("temario", temario)
+updater <- updater + temario_handler
+
+tareas <- function(bot, update) {bot$sendMessage(chat_id = update$message$chat_id, text = sprintf("Aquí puedes encontrar las tareas, recuerda que serán 8 en total y que cada una corresponde al 5 porciento de tu calificación final.\n\nAún no hay ninguna tarea.\n\n\nEscribe /start para volver al inicio.",  update$message$from$first_name))}
+tareas_handler <- CommandHandler("tareas", tareas)
+updater <- updater + tareas_handler
+
+practicas <- function(bot, update) {bot$sendMessage(chat_id = update$message$chat_id, text = sprintf("Aquí puedes encontrar las prácticas que iremos realizando, así como la liga de nuestro espacio de trabajo en RStudio Cloud. \n\nEspacio de trabajo\n\nhttps://rstudio.cloud/project/2235747\n\nPrácticas\n\nAún no hay ninguna práctica.\n\n\nEscribe /start para volver al inicio.",  update$message$from$first_name))}
+practicas_handler <- CommandHandler("practicas", practicas)
+updater <- updater + practicas_handler
+
+evaluacion <- function(bot, update) {bot$sendMessage(chat_id = update$message$chat_id, text = sprintf("La evaluación estará dividida en dos partes, tareas y trabajo final.\n\nTareas\n\nSerán un total de 8 tareas, cada una correspondiente al 5 porciento de tu calificación final.\n\nTrabajo Final\n\nSerá un articulo periodístico elaborado en RStudio Cloud en el que implementarás los conocimientos sobre estadística que adquieras durante el curso, podrás elaborarlo de manera individual o en equipos de hasta tres integrentes y corresponderá al 60 porciento de tu calificación final. Al final del curso, los artículos se publicarán el el sitio web de la Revista Estadística práctica, la revista de estadística de la Facultad de Economía:\nhttps://estadistica-practica.github.io\n\nProximamente te daremos más información sobre el trabajo final.\n\nEvaluación:\n\n* Tareas, 40 porciento\n\n* Trabajo Final, 80 porciento\n\n\nEscribe /start para volver al inicio.",  update$message$from$first_name))}
+evaluacion_handler <- CommandHandler("evaluacion", evaluacion)
+updater <- updater + evaluacion_handler
+
+preguntas <- function(bot, update) {bot$sendMessage(chat_id = update$message$chat_id, text = sprintf("Estas son las respuestes a algunas preguntas frecuentes:\n\n\n1. ¿Cuándo son las clases?\n\nLas clases de Estadística son todos los lunes y miércoles de 15:00 a 17:00 y las clases de Taller IV son todos los viernes de 16:00 a 18:00. Las transmisiones serán vía Zoom o vía Twitch, minutos antes de la hora se te hará llegar el enlace de invitación\n\n\n2. ¿Necesito una computadora para este curso?\n\nPuedes trabajar con tu computadora o también puedes hacerlo desde tu celular. Si estás utilizando tu teléfono inteligente para la clase, te recomendamos conectar un teclado USB al dispositivo, te será más cómodo escribir.\n\n\n3. ¿Necesito instalar algún programa?\n\nNo necesitas instalar ningún programa, estaremos trabajando con RStudio Cloud, un servicio en la nube.\n\n\n4. ¿Debo pagar algo por utilizar RStudio Cloud?\n\nNo, puedes usar la versión gratuita de RStudio Cloud, tendrás la opción de trabajar en la plataforma hasta 15 horas al mes, en caso de que se terminen tus horas, te recomendamos crear otra cuenta gratuita con un correo electrónico diferente.\n\n\n5. ¿Necesito tener conocimientos previos de R para este curso?\n\nNo, no necesitas tener ningún conocimiento previo de R para este curso.\n\n\n6. ¿Debo de tener encendida mi cámara web durante la sesión?\n\nLos días lunes con el profesor Arturo es importante que mantengas tu cámara prendida, los días miércoles con Cesar no es necesario ya que permanentemente se estará compartiendo pantalla.\n\n\n7. ¿Cómo se pasa asistencia?\n\nEn algunas ocasiones será mediante el chat y en otras a través de una encuesta en el grupo de telegram.\n\n\n8. ¿Hay algún tutorial de R que pueda revisar?\n\nTe recomendamos revisar Tutoriales de R, la página de tutoriales de R de la Facultad de Economía\nhttps://tutoriales-de-r.github.io\n\n\n9. ¿Cómo será el trabajo final?\n\nSerá un articulo periodístico elaborado en RStudio Cloud en el que implementarás los conocimientos sobre estadística que adquieras durante el curso, podrás elaborarlo de manera individual o en equipos de hasta tres integrentes. Al final del curso, los artículos se publicarán el el sitio web de la Revista Estadística práctica, la revista de estadística de la Facultad de Economía:\nhttps://estadistica-practica.github.io\n\n\nEscribe /start para volver al inicio.", update$message$from$first_name))}
+preguntas_handler <- CommandHandler("preguntas", preguntas)
+updater <- updater + preguntas_handler
+
+ayuda <- function(bot, update) {bot$sendMessage(chat_id = update$message$chat_id, text = sprintf("Aquí encontrarás algunos tutoriales que te ayudarán con diversos temas:\n\nIntroducción a R\nhttps://rpubs.com/cghv94/Introduccion-a-R\n\nConjuntos y operaciones con conjuntos en R\nhttps://rpubs.com/cghv94/operaciones-con-conjuntos\n\nFrecuencias absolutas en R\nhttps://cghv94.github.io/manuales-de-R-en-pdf/Frecuencias-absolutas-en-R.pdf\n\nFrecuencias relativas en R\nhttps://cghv94.github.io/manuales-de-R-en-pdf/Frecuencias-relativas-en-R.pdf\n\nGráficas de funciones\nhttps://rpubs.com/cghv94/graficas-de-funciones\n\nMatrices y arreglos en R\nhttps://rpubs.com/cghv94/matrices-y-arreglos\n\nMapas con R\nhttps://rpubs.com/cghv94/caso-practico-ggplot2-plotly-ggmap\n\nMáximos y mínimos con R\nhttps://rpubs.com/cghv94/maximos-y-minimos\n\nMedidas de tendencia central en R\nhttps://cghv94.github.io/manuales-de-R-en-pdf/Medidas-de-tendencia-central-en-R.pdf\n\nModelo lineal múltiple\nhttps://cghv94.github.io/modelo-lineal-multiple\n\nMuestreo aleatorio simple\nhttps://cghv94.github.io/muestreo-aleatorio-simple\n\nOperaciones con funciones\nhttps://rpubs.com/cghv94/operaciones-con-funciones\n\nPropiedades de campo\nhttps://rpubs.com/cghv94/propiedades-de-campo\n\n\nEscribe /start para volver al inicio.",  update$message$from$first_name))}
+ayuda_handler <- CommandHandler("ayuda", ayuda)
+updater <- updater + ayuda_handler
+
+
+
+updater$start_polling()
+```
